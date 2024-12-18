@@ -129,16 +129,18 @@ async def get_catalog(addon_url, type: str, user_settings: str, path: str):
         try:
             catalog = response.json()
         except:
-            print(response.text)
+            print(f"Failed to parse catalog response: {response.text}")
             return {}
 
         if "metas" in catalog:
             if type == "anime":
                 await remove_duplicates(catalog)
-            tasks = [
-                tmdb.get_tmdb_data(client, item.get("imdb_id", item.get("id")), "imdb_id") for item in catalog["metas"]
-            ]
-            tmdb_details = await asyncio.gather(*tasks)
+
+            # Get all IDs for TMDB lookup
+            ids = [item.get("imdb_id", item.get("id")) for item in catalog["metas"]]
+
+            # Use the new batch processing function
+            tmdb_details = await tmdb.batch_get_tmdb_data(client, ids, "imdb_id")
         else:
             return {}
 
