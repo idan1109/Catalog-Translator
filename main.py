@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import RedirectResponse, HTMLResponse, FileResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 from datetime import timedelta
@@ -26,23 +26,6 @@ meta_cache = Cache(maxsize=100000, ttl=timedelta(hours=12).total_seconds())
 meta_cache.clear()
 
 
-class NoCache(StaticFiles):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    async def get_response(self, path: str, scope):
-        response = await super().get_response(path, scope)
-        if isinstance(response, FileResponse):
-            response.headers.update(
-                {
-                    "Cache-Control": "no-cache, no-store, must-revalidate, max-age=0",
-                    "Pragma": "no-cache",
-                    "Expires": "0",
-                }
-            )
-        return response
-
-
 # Server start
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -53,7 +36,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 templates = Jinja2Templates(directory="templates")
-app.mount("/static", NoCache(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # Config CORS

@@ -40,12 +40,13 @@ async function stremioDirectAuth() {
 async function stremioLogin() {
     const email = document.getElementById("stremio-email").value;
     const password = document.getElementById("stremio-password").value;
+    const facebook = document.getElementById("facebook-toggle").checked;
     const loginUrl = "https://api.strem.io/api/login";
     const loginData = {
         "type": "Login",
         "email": email,
         "password": password,
-        "facebook": false
+        "facebook": facebook
     }
     const response = await fetch(loginUrl, {
         method: "POST",
