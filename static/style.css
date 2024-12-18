@@ -226,3 +226,27 @@ textarea[readonly] {
     color: #888;
     font-weight: bold;
 }
+
+.description {
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.description h3 {
+    color: #8e44ad;
+    margin-top: 20px;
+}
+
+.description ol {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.description li {
+    margin: 5px 0;
+}
+
+.description code {
+    font-family: monospace;
+    word-wrap: break-word;
+}

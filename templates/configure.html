@@ -17,6 +17,21 @@
         <div class="description" id="desc-head">
             <p>Questo tool permette di tradurre i cataloghi di stremio.</p>
             <p>Effettua l'accesso al tuo account Stremio per caricare gli addon.</p>
+            
+            <h3>Come funziona?</h3>
+            <p>Connetti il tuo account Stremio. Supportiamo 2 diversi metodi di autenticazione:</p>
+            <ol>
+                <li>Accesso utilizzando il tuo account Stremio (login Facebook non supportato)</li>
+                <li>Accesso utilizzando una chiave di autenticazione</li>
+            </ol>
+            
+            <p>Per utilizzare la chiave di autenticazione:</p>
+            <ol>
+                <li>Accedi a <a href="https://web.stremio.com/" target="_blank" style="color: #8e44ad;">web.stremio.com</a> usando le tue credenziali Stremio nel browser.</li>
+                <li>Apri la console sviluppatore (F12) e incolla questo codice: <code style="background: #444; padding: 2px 5px; border-radius: 3px;">JSON.parse(localStorage.getItem("profile")).auth.key</code></li>
+                <li>Copia il valore ottenuto e incollalo nel campo "Direct Auth Key" qui sotto.</li>
+                <li>Clicca su 'Connect'</li>
+            </ol>
         </div>
 
         <div class="add-group" hidden="true">
