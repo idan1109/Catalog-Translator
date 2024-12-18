@@ -1,6 +1,7 @@
-var stremioUser;
+// Declare these as window properties to ensure global scope
+window.stremioUser = null;
 
-async function stremioDirectAuth() {
+window.stremioDirectAuth = async function() {
     const authKey = document.getElementById("stremio-authkey").value.trim();
     
     if (!authKey) {
@@ -37,7 +38,8 @@ async function stremioDirectAuth() {
     }
 }
 
-async function stremioLogin() {
+// Also expose stremioLogin globally
+window.stremioLogin = async function() {
     const email = document.getElementById("stremio-email").value;
     const password = document.getElementById("stremio-password").value;
     const loginUrl = "https://api.strem.io/api/login";
