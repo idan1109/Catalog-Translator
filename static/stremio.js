@@ -32,6 +32,43 @@ async function stremioLogin() {
     }
 }
 
+async function stremioDirectAuth() {
+    const authKey = document.getElementById("stremio-authkey").value.trim();
+    
+    if (!authKey) {
+        console.log("Please enter an auth key");
+        return;
+    }
+
+    try {
+        // Test the auth key by trying to load addons
+        const addonCollection = await stremioAddonCollectionGet(authKey);
+        
+        if (addonCollection.error) {
+            console.log("Invalid auth key");
+            return;
+        }
+
+        // If successful, create a minimal user object similar to login response
+        stremioUser = {
+            result: {
+                authKey: authKey
+            }
+        };
+
+        // Update UI
+        document.getElementById("desc-head").style.display = "none";
+        document.querySelector(".login-group").style.display = "none";
+        document.querySelector(".add-group").style.display = "flex";
+        document.querySelector(".translate-button").style.display = "flex";
+        
+        // Load addons
+        await stremioLoadAddons(authKey);
+    } catch (error) {
+        console.log("Error authenticating with auth key:", error);
+    }
+}
+
 async function stremioLoadAddons(authKey) {
     const addonCollection = await stremioAddonCollectionGet(authKey);
     // Load Addons
