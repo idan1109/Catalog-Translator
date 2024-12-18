@@ -226,22 +226,3 @@ textarea[readonly] {
     color: #888;
     font-weight: bold;
 }
-
-.facebook-login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin: 5px 0;
-}
-
-.facebook-login input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
-    cursor: pointer;
-}
-
-.facebook-login label {
-    color: #ddd;
-    cursor: pointer;
-}
