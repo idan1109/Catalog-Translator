@@ -1,37 +1,5 @@
 var stremioUser;
 
-async function stremioLogin() {
-    const email = document.getElementById("stremio-email").value;
-    const password = document.getElementById("stremio-password").value;
-    const loginUrl = "https://api.strem.io/api/login";
-    const loginData = {
-        "type": "Auth",
-        "type": "Login",
-        "email": email,
-        "password": password,
-        "facebook": false
-    }
-    const response = await fetch(loginUrl, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(loginData)
-    })
-    .then(response => response.json());
-    
-    if (response.error) {
-        console.log(response.error.message);
-    } else {
-        stremioUser = response;
-        document.getElementById("desc-head").style.display = "none";
-        document.querySelector(".login-group").style.display = "none";
-        document.querySelector(".add-group").style.display = "flex";
-        document.querySelector(".translate-button").style.display = "flex";
-        await stremioLoadAddons(response.result.authKey);
-    }
-}
-
 async function stremioDirectAuth() {
     const authKey = document.getElementById("stremio-authkey").value.trim();
     
@@ -66,6 +34,37 @@ async function stremioDirectAuth() {
         await stremioLoadAddons(authKey);
     } catch (error) {
         console.log("Error authenticating with auth key:", error);
+    }
+}
+
+async function stremioLogin() {
+    const email = document.getElementById("stremio-email").value;
+    const password = document.getElementById("stremio-password").value;
+    const loginUrl = "https://api.strem.io/api/login";
+    const loginData = {
+        "type": "Login",
+        "email": email,
+        "password": password,
+        "facebook": false
+    }
+    const response = await fetch(loginUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(loginData)
+    })
+    .then(response => response.json());
+    
+    if (response.error) {
+        console.log(response.error.message);
+    } else {
+        stremioUser = response;
+        document.getElementById("desc-head").style.display = "none";
+        document.querySelector(".login-group").style.display = "none";
+        document.querySelector(".add-group").style.display = "flex";
+        document.querySelector(".translate-button").style.display = "flex";
+        await stremioLoadAddons(response.result.authKey);
     }
 }
 
